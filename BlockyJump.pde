@@ -1,3 +1,6 @@
+import java.util.HashSet;
+HashSet<Character> pressedKeys = new HashSet<Character>();
+
 ArrayList<Entity> entityList = new ArrayList<Entity>();
 Player player;
 void setup(){
@@ -17,5 +20,20 @@ void draw(){
   for (Entity ent : entityList){
     ent.display();
     ent.turn();
+  }
+  handleKeys();
+}
+void keyPressed(){
+  pressedKeys.add(key);
+}
+void keyReleased(){
+  pressedKeys.remove(key);
+}
+void handleKeys(){
+  if(pressedKeys.contains('a')) {
+    player.moveLeft();
+  }
+  if(pressedKeys.contains('d')) {
+    player.moveRight();
   }
 }
