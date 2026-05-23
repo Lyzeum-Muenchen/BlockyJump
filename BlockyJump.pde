@@ -11,14 +11,22 @@ void setup(){
   player = new Player(200, 900);
   entityList.add(player);
   player.jump();
-  
-  
+  entityList.add(new Platform(250, -600));
+  entityList.add(new Platform(150, -400));
+  entityList.add(new Platform(50, -200));
+  entityList.add(new Platform(200, 0));
+  entityList.add(new Platform(350, 200));
   entityList.add(new Platform(200, 400));
+  entityList.add(new Platform(100, 600));
   entityList.add(new Platform(300, 800));
-  entityList.add(new Enemy(100, 600));
+  
+  entityList.add(new Enemy(350, 600));
+  entityList.add(new Enemy(75, 150));
 }
 
 void draw(){
+  pushMatrix();
+  translate(0, -player.getMaxY()+height/2);
   background(0);
   for (Entity ent : entityList){
     ent.display();
@@ -26,6 +34,7 @@ void draw(){
     ent.collide(player);
   }
   handleKeys();
+  popMatrix();
 }
 
 void keyPressed(){

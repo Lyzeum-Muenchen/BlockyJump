@@ -1,6 +1,8 @@
 public class Player extends Entity {
   float vy;
   boolean alive;
+  float maxY=height/2;
+  
   public Player(float x, float y){
    this.x = x;
    this.y = y;
@@ -25,8 +27,18 @@ public class Player extends Entity {
   public void turn() {
     vy -= 1;
     y -= vy;
+    
+    if(y < maxY){
+      maxY = y;
+    }
   }
   public void gameOver() {
     alive = false;
+  }
+  public float getVY(){
+    return vy;
+  }
+  public float getMaxY(){
+    return maxY;
   }
 }

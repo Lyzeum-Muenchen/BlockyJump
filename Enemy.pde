@@ -19,7 +19,7 @@ public class Enemy extends Entity{
     float dx = p.getX() - x;
     float dy = p.getY() - y;
     float d = sqrt(dx*dx + dy*dy);
-    if (d< 70){
+    if (d < 70){
       p.gameOver();
     }
   }
