@@ -1,4 +1,6 @@
 public class Player extends Entity {
+  float vy;
+  boolean alive;
   public Player(float x, float y){
    this.x = x;
    this.y = y;
@@ -10,5 +12,21 @@ public class Player extends Entity {
   }
   public float getY(){
     return y;
+  }
+  public void moveLeft() {
+    x -= 4;
+  }
+  public void moveRight() {
+    x += 4;
+  }
+  public void jump() {
+    vy = 25;
+  }
+  public void turn() {
+    vy -= 1;
+    y -= vy;
+  }
+  public void gameOver() {
+    alive = false;
   }
 }

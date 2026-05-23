@@ -7,4 +7,5 @@ public class Entity {
   void display(){
     image(img, x, y, 128, 128);
   }
+  void collide(Player p){}
 }

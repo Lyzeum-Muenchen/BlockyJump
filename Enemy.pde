@@ -15,5 +15,13 @@ public class Enemy extends Entity{
       y -= 1;
     }
   }
+  public void collide(Player p){
+    float dx = p.getX() - x;
+    float dy = p.getY() - y;
+    float d = sqrt(dx*dx + dy*dy);
+    if (d< 70){
+      p.gameOver();
+    }
+  }
   
 }
