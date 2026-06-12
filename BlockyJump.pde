@@ -34,6 +34,8 @@ void draw(){
     ent.collide(player);
   }
   handleKeys();
+  cleanup();
+  spawn();
   popMatrix();
 }
 
@@ -50,4 +52,42 @@ void handleKeys(){
   if(pressedKeys.contains('d')) {
     player.moveRight();
   }
+}
+
+void spawn(){
+  if(entityList.size() > 15){
+    return;
+  }
+  float maxY = player.getMaxY()-height/2 ;
+  
+  float y = maxY - random(100);
+  float x = random(width);
+  
+  if(random(1) < 0.1 & emptySpace(x, y)){
+    entityList.add(new Enemy(x, y));
+  }
+  else if (emptySpace(x, y)){
+    entityList.add(new Platform(x, y));
+  }
+}
+
+void cleanup(){
+  ArrayList<Entity> filtered = new ArrayList<Entity>();
+  for(Entity ent: entityList){
+    if(ent.getY() < player.getMaxY()+height/2){
+      filtered.add(ent);
+    }
+  }
+  entityList = filtered;
+}
+
+boolean emptySpace(float x, float y){
+  for(Entity ent : entityList){
+    float dx = x - ent.getX();
+    float dy = y - ent.getY();
+    if(sqrt(dx*dx + dy*dy) < 100){
+      return false;
+    }
+  }
+  return true;
 }
