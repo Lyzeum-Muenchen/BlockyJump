@@ -2,13 +2,13 @@ import java.util.HashSet;
 HashSet<Character> pressedKeys = new HashSet<Character>();
 
 ArrayList<Entity> entityList = new ArrayList<Entity>();
-
 Player player;
-void setup(){
+
+void setup() {
   size(400, 1000);
   smooth(0);
   imageMode(CENTER);
-  
+
   player = new Player(200, 900);
   entityList.add(player);
   player.jump();
@@ -19,59 +19,37 @@ void setup(){
   entityList.add(new Platform(350, 200));
   entityList.add(new Platform(200, 400));
   entityList.add(new Platform(100, 600));
-  entityList.add(new Platform(200, 800));
-  
+  entityList.add(new Platform(300, 800));
+
   entityList.add(new Enemy(350, 600));
   entityList.add(new Enemy(75, 150));
 }
 
-void draw(){
+void draw() {
   pushMatrix();
   translate(0, -player.getMaxY()+height/2);
   background(0);
-  for (Entity ent : entityList){
-    ent.display();
+  for (Entity ent : entityList) {
     ent.turn();
+    ent.display();
     ent.collide(player);
   }
+  player.display();
   handleKeys();
-  cleanup();
-  spawn();
   popMatrix();
 }
 
-void keyPressed(){
+void keyPressed() {
   pressedKeys.add(key);
 }
-void keyReleased(){
+void keyReleased() {
   pressedKeys.remove(key);
 }
-void handleKeys(){
-  if(pressedKeys.contains('a')) {
+void handleKeys() {
+  if (pressedKeys.contains('a')) {
     player.moveLeft();
   }
-  if(pressedKeys.contains('d')) {
+  if (pressedKeys.contains('d')) {
     player.moveRight();
-  }
-}
-
-void cleanup(){
-  ArrayList<Entity> filtered = new ArrayList<Entity>();
-  for(Entity ent: entityList){
-    if(ent.getY() < player.getMaxY() + height/2){
-      // ent höher als unteres Kameraende
-      filtered.add(ent);
-    }
-  }
-  println("Alte Länge: " + entityList.size() 
-    + " NeueLänge: " + filtered.size());
-  entityList = filtered;
-}
-
-void spawn() {
-  if(entityList.size() < 10) {
-    float x = random(width);
-    float y = player.getMaxY() - height/2 - random(200);
-    entityList.add(new Platform(x, y));
   }
 }

@@ -8,4 +8,10 @@ public class Entity {
     image(img, x, y, 128, 128);
   }
   void collide(Player p){}
+  float getY(){
+    return y;
+  }
+  float getX(){
+    return x;
+  }
 }

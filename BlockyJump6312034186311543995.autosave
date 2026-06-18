@@ -2,7 +2,6 @@ import java.util.HashSet;
 HashSet<Character> pressedKeys = new HashSet<Character>();
 
 ArrayList<Entity> entityList = new ArrayList<Entity>();
-
 Player player;
 void setup(){
   size(400, 1000);
@@ -19,7 +18,7 @@ void setup(){
   entityList.add(new Platform(350, 200));
   entityList.add(new Platform(200, 400));
   entityList.add(new Platform(100, 600));
-  entityList.add(new Platform(200, 800));
+  entityList.add(new Platform(300, 800));
   
   entityList.add(new Enemy(350, 600));
   entityList.add(new Enemy(75, 150));
@@ -55,23 +54,40 @@ void handleKeys(){
   }
 }
 
+void spawn(){
+  if(entityList.size() > 15){
+    return;
+  }
+  float maxY = player.getMaxY()-height/2 ;
+  
+  float y = maxY - random(100);
+  float x = random(width);
+  
+  if(random(1) < 0.1 & emptySpace(x, y)){
+    entityList.add(new Enemy(x, y));
+  }
+  else if (emptySpace(x, y)){
+    entityList.add(new Platform(x, y));
+  }
+}
+
 void cleanup(){
   ArrayList<Entity> filtered = new ArrayList<Entity>();
   for(Entity ent: entityList){
-    if(ent.getY() < player.getMaxY() + height/2){
-      // ent höher als unteres Kameraende
+    if(ent.getY() < player.getMaxY()+height/2){
       filtered.add(ent);
     }
   }
-  println("Alte Länge: " + entityList.size() 
-    + " NeueLänge: " + filtered.size());
   entityList = filtered;
 }
 
-void spawn() {
-  if(entityList.size() < 10) {
-    float x = random(width);
-    float y = player.getMaxY() - height/2 - random(200);
-    entityList.add(new Platform(x, y));
+boolean emptySpace(float x, float y){
+  for(Entity ent : entityList){
+    float dx = x - ent.getX();
+    float dy = y - ent.getY();
+    if(sqrt(dx*dx + dy*dy) < 150){
+      return false;
+    }
   }
+  return true;
 }
